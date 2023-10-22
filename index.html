@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animate on scroll</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:sans-serif ;
+        }
+
+        body {
+            background-color: rgb(61, 59, 59);
+            color: #fff;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .animate-on-scroll{
+            opacity: 0;
+            transform: translateX(-300px);
+            transition: all 0.4s ease-out;
+            transition-delay: 0.2s;
+        }
+
+        .animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <h1>Hello World!</h1>
+        </section>
+        <section>
+            <h2 class="animate-on-scroll">About us</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, cupiditate fuga alias odio incidunt optio dolore quis eligendi impedit expedita?</p>
+        </section>
+    </main>
+    <script>
+        const animation_elements = document.querySelectorAll('.animate-on-scroll');
+        //sets up the intersection observer api in javascript
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                } else {
+                    entry.target.classList.remove('animate');
+                }
+            })
+        }, {
+            threshold: 0.5 //sets a delay in observing the elements
+        });
+
+        //Sets a for loop to pull in the elements into the observer
+        for (let i = 0; i < animation_elements.length; i++) { 
+            const el = animation_elements[i];
+
+            observer.observe(el);
+        }
+    </script>
+</body>
+</html>
